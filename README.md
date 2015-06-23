@@ -27,6 +27,9 @@ you can follow the instructions in the [simple](#simple) section. If you plan to
 use a reverse proxy, further instructions can be found in the
 [reverse proxy](#reverse-proxy) section of this document.
 
+If you are planning to use a different authentication mode, follow the
+instructions in the [authentication](#authentication) section of this document.
+
 ### Simple
 
 Atlassian Confluence® stores instance-specific data inside a folder it defines
@@ -93,3 +96,41 @@ https://example.com/confluence, you would use the following command:
 
 Once your proxy server is configured, Atlassian Confluence® should be accessible
 at https://example.com/confluence.
+
+### Authentication
+
+By default, Atlassian Confluence® is configured to use `ConfluenceAuthenticator`
+for authentication. This allows for authentication and authorization to be
+performed against an internal directory of users.
+
+If you want to switch to one of the other authentication providers, you can
+specify the *CONFLUENCE_AUTH* environment variable with one of the following
+values:
+
+- `ConfluenceAuthenticator` (default)
+- `ConfluenceCrowdSSOAuthenticator`
+- `ConfluenceGroupJoiningAuthenticator`
+
+If you are using the `ConfluenceCrowdSSOAuthenticator` authenticator, you can
+also supply the application's name, password, and Atlassian Crowd's® base URL as
+environment variables:
+
+- *CROWD_APP_NAME* the application name configured in Atlassian Crowd®.
+- *CROWD_APP_PASS* the password configured in Atlassian Crowd®.
+- *CROWD_BASE_URL* the base URL of Atlassian Crowd®, including "/crowd".
+
+Building on the previous reverse proxy example, here's how you can switch to
+Atlassian Crowd® single sign-on authentication running behind the same proxy:
+
+    $ docker run \
+        --name confluence \
+        --volumes-from confluence-data \
+        -p 8090:8090 \
+        -e TC_PROXYNAME=example.com \
+        -e TC_PROXYPORT=443 \
+        -e TC_ROOTPATH=/confluence \
+        -e CONFLUENCE_AUTH=ConfluenceCrowdSSOAuthenticator \
+        -e CROWD_APP_NAME=confluence \
+        -e CROWD_APP_PASS=somesecretpassword \
+        -e CROWD_BASE_URL=https://example.com/crowd \
+        jleight/atlassian-confluence
