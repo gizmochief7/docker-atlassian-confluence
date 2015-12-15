@@ -1,7 +1,7 @@
 FROM jleight/atlassian-base:latest
 MAINTAINER Jonathon Leight <jonathon.leight@jleight.com>
 
-ENV APP_VERSION 5.8.10
+ENV APP_VERSION 5.9.2
 ENV APP_BASEURL ${ATL_BASEURL}/confluence/downloads/binary
 ENV APP_PACKAGE atlassian-confluence-${APP_VERSION}.tar.gz
 ENV APP_URL     ${APP_BASEURL}/${APP_PACKAGE}
