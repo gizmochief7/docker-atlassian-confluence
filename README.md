@@ -13,7 +13,7 @@ forwarding rule and run the container:
 
     $ docker run \
         -p 8090:8090 \
-        jleight/atlassian-confluence
+        gizmochief7/atlassian-confluence
 
 Usage
 -----
@@ -42,7 +42,7 @@ A data container can be created by running the following command:
 
     $ docker create \
         --name confluence-data \
-        jleight/atlassian-confluence
+        gizmochief7/atlassian-confluence
 
 The application container can then be started by running:
 
@@ -50,7 +50,7 @@ The application container can then be started by running:
         --name confluence \
         --volumes-from confluence-data \
         -p 8090:8090 \
-        jleight/atlassian-confluence
+        gizmochief7/atlassian-confluence
 
 ### Context Root
 
@@ -66,7 +66,7 @@ It can be specified in the `docker run` command like this:
         --volumes-from confluence-data \
         -p 8090:8090 \
         -e TC_ROOTPATH=/confluence \
-        jleight/atlassian-confluence
+        gizmochief7/atlassian-confluence
 
 Atlassian Confluence® can then be accessed at http://${HOST_IP}:8090/confluence.
 
@@ -92,7 +92,7 @@ https://example.com/confluence, you would use the following command:
         -e TC_PROXYNAME=example.com \
         -e TC_PROXYPORT=443 \
         -e TC_ROOTPATH=/confluence \
-        jleight/atlassian-confluence
+        gizmochief7/atlassian-confluence
 
 Once your proxy server is configured, Atlassian Confluence® should be accessible
 at https://example.com/confluence.
@@ -133,4 +133,4 @@ Atlassian Crowd® single sign-on authentication running behind the same proxy:
         -e CROWD_APP_NAME=confluence \
         -e CROWD_APP_PASS=somesecretpassword \
         -e CROWD_BASE_URL=https://example.com/crowd \
-        jleight/atlassian-confluence
+        gizmochief7/atlassian-confluence
